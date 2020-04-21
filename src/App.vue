@@ -3,12 +3,22 @@
     <v-app-bar app color="primary" dark>
       <v-toolbar-title>Vuetify Dashboard</v-toolbar-title>
       <v-spacer />
-      <v-btn text rounded>Home</v-btn>
-      <v-btn text rounded>Login</v-btn>
+      <v-btn
+        v-for="link in links"
+        :key="link.label"
+        color="white"
+        text
+        rounded
+        class="my-2"
+        :to="link.url"
+      >
+        {{ link.label }}
+      </v-btn>
+       <v-btn @click="toggleTheme" text rounded>Toggle Theme</v-btn>
     </v-app-bar>
     
     <v-content>
-      
+      <router-view></router-view>
     </v-content>
 
     <v-footer
@@ -21,13 +31,14 @@
       >
         <v-btn
           v-for="link in links"
-          :key="link"
+          :key="link.label"
           color="white"
           text
           rounded
           class="my-2"
+          :to="link.url"
         >
-          {{ link }}
+          {{ link.label }}
         </v-btn>
         <v-col
           class="primary lighten-2 py-4 text-center white--text"
@@ -47,7 +58,30 @@ export default {
   name: 'App',
 
   data: () => ({
-    links: ['Home', 'Login']
+    links: [
+      {
+        label: 'Login',
+        url: '/login'
+      },
+      {
+        label: 'Home',
+        url: '/'
+      },
+      {
+        label: 'Register',
+        url: '/register'
+      },
+      {
+        label: 'Dashboard',
+        url: '/dashboard',
+      }
+    ]
   }),
+
+  methods: {
+    toggleTheme(){
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+    }
+  }
 };
 </script>
